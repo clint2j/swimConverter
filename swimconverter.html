@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Swim distance Converter</title>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<style>
+h1 {
+font-family: sans-serif;
+font-size: 17px;
+margin: 7px;
+}
+body {
+height: 400px;
+width: 200px;
+}
+html {
+height: 400px;
+width: 200px;
+}
+#value {
+width: 173px;
+margin-top: 10px;
+height: 25px;
+padding: 0;
+overflow: hidden;
+border: black solid 2px;
+background-color: #ccebff;
+display: none;
+}
+#value_1 {
+margin: auto;
+margin-left: 2px;
+}
+select {
+background-color: #ccebff;
+width: 100px;
+height: 25px;
+}
+select:hover {
+background-color: #e6f5ff;
+}
+select:focus {
+background-color: white;
+}
+input {
+background-color: #ccebff;
+border: 1px grey solid;
+height: 25px;
+box-sizing: border-box;
+width: 57px;
+margin-left: 3px;
+}
+input:first-of-type {
+margin: 0;
+}
+input:hover {
+background-color: #e6f5ff;
+}
+input:focus {
+background-color: white;
+border: black solid 2px;
+}
+button {
+height: 25px;
+background-color: #ccebff;
+border: 1px grey solid;
+}
+button:hover {
+background-color: #e6f5ff;
+}
+button:active {
+background-color: white;
+}
+</style>
+</head>
+<body>
+<h1>Swimming Converter</h1>
+<div id="scy_to_lcm">
+<p>Distance:</p><select id="dis_1">
+  <option value="50">50</option>
+  <option value="100">100</option>
+  <option value="200">200</option>
+  <option value="500">500/400</option>
+  <option value="1000">1000/800</option>
+  <option value="1650">1650/1500</option>
+</select><br>
+<p>Stroke:</p><select id="stroke_1">
+  <option value="fr">Free</option>
+  <option value="bk">Back</option>
+  <option value="br">Breast</option>
+  <option value="fl">Fly</option>
+  <option value="im">IM</option>
+</select><br>
+<p>Conversion:</p><select id="stroe_2">
+  <option value="scy_lcm">SCY to LCM</option>
+  <option value="scy_scm">SCY to SCM</option>
+  <option value="scm_scy">SCM to SCY</option>
+  <option value="lcm_scy">LCM to SCY</option>
+  <option value="scm_lcm">SCM to LCM</option>
+  <option value="lcm_scm">LCM to SCM</option>
+</select><br>
+<p>Original time:</p><input id="ntime_1" type="number" placeholder="min"></input><input id="ntime_2" type="number" placeholder="sec"></input>
+<button id="but" type="button">Submit</button>
+<p>Converted Time (min:sec):</p>
+<div id="value">
+<h2 id="value_1"></h2>
+</div>
+</div>
+<script src="cool.js"></script>
+</body>
+</html>
