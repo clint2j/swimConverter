@@ -3,6 +3,7 @@ import { convert, formatTime } from "./converter.js";
 const twoDNums = document.getElementsByClassName("2dNum");
 for (const element of twoDNums) {
   restrictToTwoDigitNumbers(element);
+  addAutoSelectBehavior(element);
 }
 
 document.getElementById("but").onclick = () => {
@@ -82,42 +83,92 @@ document.getElementById("but").onclick = () => {
 
 function restrictToTwoDigitNumbers(inputElement) {
   inputElement.addEventListener("keydown", function (e) {
-    // Allow backspace, delete, tab, escape, enter
-    console.log("hello");
+    const allowedKeys = [
+      "Backspace",
+      "Tab",
+      "Escape",
+      "Enter",
+      "Delete",
+      "ArrowLeft",
+      "ArrowRight",
+    ];
+
+    // Allow navigation and editing shortcuts
     if (
-      [8, 9, 27, 13, 46].includes(e.keyCode) ||
-      // Allow Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-      (e.ctrlKey && [65, 67, 86, 88].includes(e.keyCode))
+      allowedKeys.includes(e.key) ||
+      (e.ctrlKey && ["a", "c", "v", "x"].includes(e.key.toLowerCase()))
     ) {
       return;
     }
 
-    // Prevent if not a number key (0-9)
-    if (
-      !(
-        (e.keyCode >= 48 && e.keyCode <= 57) || // Top row numbers
-        (e.keyCode >= 96 && e.keyCode <= 105)
-      )
-    ) {
-      // Numpad numbers
+    // Allow only numeric keys (single characters "0" to "9")
+    if (!/^[0-9]$/.test(e.key)) {
       e.preventDefault();
       return;
     }
 
+    // if (this.selectionStart !== this.selectionEnd) {
+    //   console.log("Test123");
+    //   return;
+    // }
     // Prevent if already 2 digits
     if (this.value.length >= 2) {
       e.preventDefault();
     }
   });
-
-  // Handle paste events
-  //   inputElement.addEventListener("paste", function (e) {
-  //     e.preventDefault();
-  //     const paste = (e.clipboardData || window.clipboardData).getData("text");
-  //     const numbersOnly = paste.replace(/\D/g, "").slice(0, 2);
-  //     this.value = numbersOnly;
-  //   });
-
-  //   // Cleanup existing value on initial setup
-  //   inputElement.value = inputElement.value.replace(/\D/g, "").slice(0, 2);
 }
+
+function addAutoSelectBehavior(inputElement) {
+  // Select all text when the input gains focus
+  inputElement.addEventListener("focus", function () {
+    // Use setTimeout to ensure the select happens after the focus event
+    setTimeout(() => {
+      this.select();
+    }, 0);
+  });
+
+  // Optional: Also select all on click (for mouse users)
+  inputElement.addEventListener("click", function () {
+    if (document.activeElement === this) {
+      this.select();
+    }
+  });
+}
+
+document.getElementById("secs_inputted").addEventListener("blur", (e) => {
+  const val = e.target.value;
+  if (val.length >= 2) {
+    return;
+  }
+  if (val === "") {
+    e.target.value = "00";
+    return;
+  }
+  const nVal = Number(val);
+  if (nVal >= 0 && nVal < 10) {
+    e.target.value = "0" + val;
+  }
+});
+
+document.getElementById("mins_inputted").addEventListener("blur", (e) => {
+  const val = e.target.value;
+  if (val === "") {
+    e.target.value = "00";
+    return;
+  }
+});
+
+document.getElementById("hh_inputted").addEventListener("blur", (e) => {
+  const val = e.target.value;
+  if (val.length >= 2) {
+    return;
+  }
+  if (val === "") {
+    e.target.value = "00";
+    return;
+  }
+  const nVal = Number(val);
+  if (nVal >= 0 && nVal < 10) {
+    e.target.value = val + "0";
+  }
+});
