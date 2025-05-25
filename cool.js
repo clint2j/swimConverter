@@ -32,9 +32,9 @@
 //   const distance = Number(eventMatch[1]);
 //   const stroke = eventMatch[2];
 
-//   const conversionValue = document.getElementById("conversion")?.value ?? "";
-//   const inputType = conversionValue.slice(0, 3);
-//   const outputType = conversionValue.slice(4);
+  const conversionValue = document.getElementById("conversion")?.value ?? "";
+  const inputType = conversionValue.slice(0, 3);
+  const outputType = conversionValue.slice(4);
 
 //   const convertedTime = convert(
 //     totalSeconds,

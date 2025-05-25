@@ -17,7 +17,7 @@
         padding: 10px;
         background: #f4faff;
         height: 400px;
-        width: 300px;
+        width: 250px;
       }
 
       h1 {
@@ -27,7 +27,7 @@
         color: #003366;
       }
 
-      #scy_to_lcm {
+      #converter {
         background: #ffffff;
         padding: 15px;
         border-radius: 12px;
@@ -51,7 +51,7 @@
         padding: 6px 8px;
         border-radius: 6px;
         border: 1px solid #bbb;
-        transition: background 0.2s ease, border 0.2s ease;
+        transition: background 0.2s ease, border 0.1s ease;
       }
 
       select {
@@ -75,13 +75,14 @@
       }
 
       input[type="number"] {
-        width: 48%;
+        width: 29%;
         display: inline-block;
+        text-align: center;
       }
 
-      input[type="number"]:first-of-type {
+      /* input[type="number"]:first-of-type {
         margin-right: 4%;
-      }
+      } */
 
       button {
         background-color: #007acc;
@@ -96,7 +97,6 @@
       }
 
       #output {
-        display: none;
         margin-top: 5px;
         background-color: #e0f4ff;
         border-left: 5px solid #007acc;
@@ -109,14 +109,24 @@
         font-size: 26px;
         color: #003366;
         font-weight: bold;
+        margin: 12px;
+      }
+
+      .flexContainer {
+        display: flex;
+        justify-content: space-between;
+      }
+      #outputBox {
+        display: none;
       }
     </style>
   </head>
   <body>
     <h1>Swim Time Converter</h1>
-    <div id="scy_to_lcm">
+    <div id="converter">
       <p>Event</p>
-      <select id="event">
+      <select id="event" class="throws_error">
+        <option value="placeholder" disabled selected>Select an event</option>
         <option value="50fr">50 Free</option>
         <option value="100fr">100 Free</option>
         <option value="200fr">200 Free</option>
@@ -148,17 +158,42 @@
       </select>
 
       <p>Original Time</p>
-      <input id="mins_inputted" type="number" placeholder="Minutes" />
-      <input id="secs_inputted" type="number" placeholder="Seconds" />
+      <div class="flexContainer">
+        <input
+          id="mins_inputted"
+          type="number"
+          placeholder="MM"
+          maxlength="2"
+          class="2dNum"
+        />
+        <span>:</span>
+        <input
+          id="secs_inputted"
+          type="number"
+          placeholder="SS"
+          maxlength="2"
+          class="2dNum"
+        />
+        <span>.</span>
+        <input
+          id="hh_inputted"
+          type="number"
+          placeholder="HH"
+          maxlength="2"
+          class="2dNum"
+        />
+      </div>
 
       <button id="but" type="button">Convert</button>
 
-      <p>Converted Time</p>
-      <div id="output">
-        <h2 id="output_value"></h2>
+      <div id="outputBox">
+        <p>Converted Time</p>
+        <div id="output">
+          <h2 id="output_value"></h2>
+        </div>
       </div>
     </div>
-
-    <script src="cool.js"></script>
+    <!-- <script src="converter.js"></script> -->
+    <script type="module" src="convertFormControl.js"></script>
   </body>
 </html>
