@@ -1,89 +1,76 @@
-const convert = (totalSeconds, distance, stroke, inputType, outputType) => {
-  let outputTime = 0;
+const STROKE_ADJUSTMENTS = {
+  fr: 0.8,
+  bk: 0.6,
+  br: 1.0,
+  fl: 0.7,
+  im: 0.8,
+};
 
-  if ((distance === 400 && stroke == "fr") || distance === 800) {
-    outputTime = totalSeconds;
-    if (inputType === "scm") {
-      outputTime += (6.4 * distance) / 400;
-    }
-    if (outputType === "scy") {
-      outputTime /= 0.8925;
-    }
-    if (inputType === "scy") {
-      outputTime *= 0.8925;
-    }
-    if (outputType === "scm") {
-      outputTime -= (6.4 * distance) / 400;
-    }
-    return outputTime;
+const adjustLcmTime = (time, distance, stroke, direction = "subtract") => {
+  const adjustment = STROKE_ADJUSTMENTS[stroke] || 0;
+  const delta = adjustment * (distance / 50);
+  return direction === "add" ? time + delta : time - delta;
+};
+
+const convertSpecialDistances = (
+  totalSeconds,
+  distance,
+  stroke,
+  inputType,
+  outputType
+) => {
+  let time = totalSeconds;
+
+  if ((distance === 400 && stroke === "fr") || distance === 800) {
+    if (inputType === "scm") time += (6.4 * distance) / 400;
+    if (outputType === "scy") time /= 0.8925;
+    if (inputType === "scy") time *= 0.8925;
+    if (outputType === "scm") time -= (6.4 * distance) / 400;
+    return time;
   }
 
   if (distance === 1500) {
-    outputTime = totalSeconds;
-    if (inputType === "scm") {
-      outputTime += 24;
-    }
-    if (outputType === "scy") {
-      outputTime /= 1.02;
-    }
-    if (inputType === "scy") {
-      outputTime *= 1.02;
-    }
-    if (outputType === "scm") {
-      outputTime -= 24;
-    }
-    return outputTime;
+    if (inputType === "scm") time += 24;
+    if (outputType === "scy") time /= 1.02;
+    if (inputType === "scy") time *= 1.02;
+    if (outputType === "scm") time -= 24;
+    return time;
   }
 
-  if (inputType == "lcm") {
-    switch (stroke) {
-      case "fr":
-        totalSeconds -= 0.8 * (distance / 50);
-        break;
-      case "bk":
-        totalSeconds -= 0.6 * (distance / 50);
-        break;
-      case "br":
-        totalSeconds -= 1 * (distance / 50);
-        break;
-      case "fl":
-        totalSeconds -= 0.7 * (distance / 50);
-        break;
-      case "im":
-        totalSeconds -= 0.8 * (distance / 50);
-        break;
-    }
+  return null; // not a special distance
+};
+
+const convert = (totalSeconds, distance, stroke, inputType, outputType) => {
+  // Handle special cases (400fr, 800, 1500)
+  const specialCaseTime = convertSpecialDistances(
+    totalSeconds,
+    distance,
+    stroke,
+    inputType,
+    outputType
+  );
+  if (specialCaseTime !== null) return specialCaseTime;
+
+  let time = totalSeconds;
+
+  // Adjust from LCM to base time
+  if (inputType === "lcm") {
+    time = adjustLcmTime(time, distance, stroke, "subtract");
   }
 
-  if (inputType == "scy") {
-    outputTime = totalSeconds * 1.11;
-  } else if (outputType == "scy") {
-    outputTime = totalSeconds / 1.11;
-  } else {
-    outputTime = totalSeconds;
+  // Convert pool type
+  if (inputType === "scy") {
+    time *= 1.11;
+  } else if (outputType === "scy") {
+    time /= 1.11;
   }
 
-  if (outputType == "lcm") {
-    switch (stroke) {
-      case "fr":
-        outputTime += 0.8 * (distance / 50);
-        break;
-      case "bk":
-        outputTime += 0.6 * (distance / 50);
-        break;
-      case "br":
-        outputTime += 1 * (distance / 50);
-        break;
-      case "fl":
-        outputTime += 0.7 * (distance / 50);
-        break;
-      case "im":
-        outputTime += 0.8 * (distance / 50);
-        break;
-    }
+  // Adjust to LCM if needed
+  if (outputType === "lcm") {
+    time = adjustLcmTime(time, distance, stroke, "add");
   }
 
-  return outputTime;
+  return time;
 };
 
 const formatTime = (time) => {
