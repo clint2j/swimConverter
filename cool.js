@@ -1,51 +1,52 @@
-document.getElementById("but").onclick = () => {
-  document.getElementById("output").style.display = "block";
-  const minsInput = document.getElementById("mins_inputted").value.trim();
-  const secsInput = document.getElementById("secs_inputted").value.trim();
+// document.getElementById("but").onclick = () => {
+//   document.getElementById("output").style.display = "block";
+//   const minsInput = document.getElementById("mins_inputted").value.trim();
+//   const secsInput = document.getElementById("secs_inputted").value.trim();
 
-  let mins = parseFloat(minsInput);
-  let secs = parseFloat(secsInput);
+//   let mins = parseFloat(minsInput);
+//   let secs = parseFloat(secsInput);
 
-  if ((minsInput === "" && secsInput === "") || mins < 0 || secs < 0) {
-    document.getElementById("output_value").innerHTML = "NaN";
-    return;
-  }
+//   if ((minsInput === "" && secsInput === "") || mins < 0 || secs < 0) {
+//     document.getElementById("output_value").innerHTML = "NaN";
+//     return;
+//   }
 
-  if (isNaN(mins)) {
-    mins = 0;
-  }
+//   if (isNaN(mins)) {
+//     mins = 0;
+//   }
 
-  if (isNaN(secs)) {
-    secs = 0;
-  }
+//   if (isNaN(secs)) {
+//     secs = 0;
+//   }
 
-  const totalSeconds = mins * 60 + secs;
+//   const totalSeconds = mins * 60 + secs;
 
-  const eventInput = document.getElementById("event")?.value ?? "";
-  const eventMatch = eventInput.match(/^(\d+)([a-zA-Z]+)$/);
+//   const eventInput = document.getElementById("event")?.value ?? "";
+//   const eventMatch = eventInput.match(/^(\d+)([a-zA-Z]+)$/);
 
-  if (!eventMatch) {
-    console.error("Invalid event format");
-    return;
-  }
+//   if (!eventMatch) {
+//     console.error("Invalid event format");
+//     return;
+//   }
 
-  const distance = Number(eventMatch[1]);
-  const stroke = eventMatch[2];
+//   const distance = Number(eventMatch[1]);
+//   const stroke = eventMatch[2];
 
-  const conversionValue = document.getElementById("conversion")?.value ?? "";
-  const inputType = conversionValue.slice(0, 3);
-  const outputType = conversionValue.slice(4);
+//   const conversionValue = document.getElementById("conversion")?.value ?? "";
+//   const inputType = conversionValue.slice(0, 3);
+//   const outputType = conversionValue.slice(4);
 
-  const convertedTime = convert(
-    totalSeconds,
-    distance,
-    stroke,
-    inputType,
-    outputType
-  );
-  document.getElementById("output_value").innerHTML =
-    formattedTime(convertedTime);
-};
+//   const convertedTime = convert(
+//     totalSeconds,
+//     distance,
+//     stroke,
+//     inputType,
+//     outputType
+//   );
+//   console.log(convertedTime);
+//   document.getElementById("output_value").innerHTML =
+//     formattedTime(convertedTime);
+// };
 
 const convert = (totalSeconds, distance, stroke, inputType, outputType) => {
   let outputTime = 0;
@@ -133,18 +134,27 @@ const convert = (totalSeconds, distance, stroke, inputType, outputType) => {
   return outputTime;
 };
 
-const formattedTime = (time) => {
+const formatTime = (time) => {
   const hours = Math.floor(time / 3600);
   const minutes = Math.floor((time % 3600) / 60);
   const seconds = time % 60;
 
+  const whole = String(Math.floor(seconds)).padStart(2, "0");
+  const frac = String((seconds % 1).toFixed(3)).substring(1); // ".123"
+
+  const paddedSeconds = whole + frac;
+
   if (hours > 0) {
-    return `${hours}:${String(minutes).padStart(2, "0")}:${String(
-      seconds
-    ).padStart(2, "0")}`;
+    return `${hours}:${String(minutes).padStart(2, "0")}:${paddedSeconds}`;
   } else if (minutes > 0) {
-    return `${minutes}:${String(seconds).padStart(2, "0")}`;
+    return `${minutes}:${paddedSeconds}`;
   } else {
-    return `${seconds}`;
+    return `${paddedSeconds}`;
   }
 };
+
+const main = () => {
+  console.log(convert(33.112, 100, "fr", "scy", "scm"));
+};
+
+main();
