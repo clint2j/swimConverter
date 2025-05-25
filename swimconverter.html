@@ -1,111 +1,199 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Swim distance Converter</title>
-<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-<style>
-h1 {
-font-family: sans-serif;
-font-size: 17px;
-margin: 7px;
-}
-body {
-height: 400px;
-width: 200px;
-}
-html {
-height: 400px;
-width: 200px;
-}
-#value {
-width: 173px;
-margin-top: 10px;
-height: 25px;
-padding: 0;
-overflow: hidden;
-border: black solid 2px;
-background-color: #ccebff;
-display: none;
-}
-#value_1 {
-margin: auto;
-margin-left: 2px;
-}
-select {
-background-color: #ccebff;
-width: 100px;
-height: 25px;
-}
-select:hover {
-background-color: #e6f5ff;
-}
-select:focus {
-background-color: white;
-}
-input {
-background-color: #ccebff;
-border: 1px grey solid;
-height: 25px;
-box-sizing: border-box;
-width: 57px;
-margin-left: 3px;
-}
-input:first-of-type {
-margin: 0;
-}
-input:hover {
-background-color: #e6f5ff;
-}
-input:focus {
-background-color: white;
-border: black solid 2px;
-}
-button {
-height: 25px;
-background-color: #ccebff;
-border: 1px grey solid;
-}
-button:hover {
-background-color: #e6f5ff;
-}
-button:active {
-background-color: white;
-}
-</style>
-</head>
-<body>
-<h1>Swimming Converter</h1>
-<div id="scy_to_lcm">
-<p>Distance:</p><select id="dis_1">
-  <option value="50">50</option>
-  <option value="100">100</option>
-  <option value="200">200</option>
-  <option value="500">500/400</option>
-  <option value="1000">1000/800</option>
-  <option value="1650">1650/1500</option>
-</select><br>
-<p>Stroke:</p><select id="stroke_1">
-  <option value="fr">Free</option>
-  <option value="bk">Back</option>
-  <option value="br">Breast</option>
-  <option value="fl">Fly</option>
-  <option value="im">IM</option>
-</select><br>
-<p>Conversion:</p><select id="stroe_2">
-  <option value="scy_lcm">SCY to LCM</option>
-  <option value="scy_scm">SCY to SCM</option>
-  <option value="scm_scy">SCM to SCY</option>
-  <option value="lcm_scy">LCM to SCY</option>
-  <option value="scm_lcm">SCM to LCM</option>
-  <option value="lcm_scm">LCM to SCM</option>
-</select><br>
-<p>Original time:</p><input id="ntime_1" type="number" placeholder="min"></input><input id="ntime_2" type="number" placeholder="sec"></input>
-<button id="but" type="button">Submit</button>
-<p>Converted Time (min:sec):</p>
-<div id="value">
-<h2 id="value_1"></h2>
-</div>
-</div>
-<script src="cool.js"></script>
-</body>
+  <head>
+    <title>Swim Time Converter</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        margin: 0;
+        padding: 10px;
+        background: #f4faff;
+        height: 400px;
+        width: 250px;
+      }
+
+      h1 {
+        font-size: 18px;
+        margin-bottom: 15px;
+        text-align: center;
+        color: #003366;
+      }
+
+      #converter {
+        background: #ffffff;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      p {
+        margin: 10px 0 5px;
+        font-weight: 600;
+        font-size: 13px;
+        color: #333;
+      }
+
+      select,
+      input,
+      button {
+        font-family: "Open Sans", sans-serif;
+        font-size: 14px;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 6px 8px;
+        border-radius: 6px;
+        border: 1px solid #bbb;
+        transition: background 0.2s ease, border 0.1s ease;
+      }
+
+      select {
+        cursor: pointer;
+      }
+
+      select:hover,
+      input:hover {
+        background-color: #eaf6ff;
+      }
+
+      select:focus,
+      input:focus {
+        /* background-color: #ffffff; */
+        border-color: #007acc;
+        outline: none;
+      }
+
+      input::placeholder {
+        color: #888;
+      }
+
+      input[type="number"] {
+        width: 29%;
+        display: inline-block;
+        text-align: center;
+      }
+
+      /* input[type="number"]:first-of-type {
+        margin-right: 4%;
+      } */
+
+      button {
+        background-color: #007acc;
+        color: white;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+      }
+
+      button:active {
+        background-color: #005fa3;
+      }
+
+      #output {
+        margin-top: 5px;
+        background-color: #e0f4ff;
+        border-left: 5px solid #007acc;
+        padding: 5px;
+        border-radius: 6px;
+        text-align: center;
+      }
+
+      #output_value {
+        font-size: 26px;
+        color: #003366;
+        font-weight: bold;
+        margin: 12px;
+      }
+
+      .flexContainer {
+        display: flex;
+        justify-content: space-between;
+      }
+      #outputBox {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Swim Time Converter</h1>
+    <div id="converter">
+      <p>Event</p>
+      <select id="event" class="throws_error">
+        <option value="placeholder" disabled selected>Select an event</option>
+        <option value="50fr">50 Free</option>
+        <option value="100fr">100 Free</option>
+        <option value="200fr">200 Free</option>
+        <option value="400fr">400/500 Free</option>
+        <option value="800fr">800/1000 Free</option>
+        <option value="1650fr">1500/1650 Free</option>
+        <option value="50bk">50 Back</option>
+        <option value="100bk">100 Back</option>
+        <option value="200bk">200 Back</option>
+        <option value="50br">50 Breast</option>
+        <option value="100br">100 Breast</option>
+        <option value="200br">200 Breast</option>
+        <option value="50fl">50 Fly</option>
+        <option value="100fl">100 Fly</option>
+        <option value="200fl">200 Fly</option>
+        <option value="100im">100 IM</option>
+        <option value="200im">200 IM</option>
+        <option value="400im">400 IM</option>
+      </select>
+
+      <p>Conversion</p>
+      <select id="conversion">
+        <option value="scy_lcm">SCY to LCM</option>
+        <option value="scy_scm">SCY to SCM</option>
+        <option value="scm_scy">SCM to SCY</option>
+        <option value="lcm_scy">LCM to SCY</option>
+        <option value="scm_lcm">SCM to LCM</option>
+        <option value="lcm_scm">LCM to SCM</option>
+      </select>
+
+      <p>Original Time</p>
+      <div class="flexContainer">
+        <input
+          id="mins_inputted"
+          type="number"
+          placeholder="MM"
+          maxlength="2"
+          class="2dNum"
+        />
+        <span>:</span>
+        <input
+          id="secs_inputted"
+          type="number"
+          placeholder="SS"
+          maxlength="2"
+          class="2dNum"
+        />
+        <span>.</span>
+        <input
+          id="hh_inputted"
+          type="number"
+          placeholder="HH"
+          maxlength="2"
+          class="2dNum"
+        />
+      </div>
+
+      <button id="but" type="button">Convert</button>
+
+      <div id="outputBox">
+        <p>Converted Time</p>
+        <div id="output">
+          <h2 id="output_value"></h2>
+        </div>
+      </div>
+    </div>
+    <!-- <script src="converter.js"></script> -->
+    <script type="module" src="convertFormControl.js"></script>
+  </body>
 </html>

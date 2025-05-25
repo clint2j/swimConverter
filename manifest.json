@@ -1,10 +1,10 @@
 {
-    "name": "Swim Converter",
-    "description" : "This extension effortlessly converts swim times between long course and both American and European short courses.",
-    "version": "1.122",
-    "manifest_version": 2,
-    "browser_action": {
-      "default_popup": "swimconverter.html",
-	"default_icon": "icon2.png"
-    }
+  "name": "Swim Converter",
+  "description": "This extension effortlessly converts swim times between long course and both American and European short courses.",
+  "version": "2.11",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "swimconverter.html",
+    "default_icon": "icon2.png"
   }
+}
