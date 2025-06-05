@@ -8,7 +8,7 @@
  * Repository: https://github.com/clint2j/swimConverter
  * License: MIT
  *
- * @fileoverview [Brief description of what this file does]
+ * @fileoverview This contains all the logic for converting between the 3 pool types for any event
  */
 const STROKE_ADJUSTMENTS = {
   fr: 0.8,
