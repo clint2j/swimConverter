@@ -1,3 +1,15 @@
+/**
+ * SwimTime Converter - Chrome Extension
+ * 
+ * This file is part of the SwimTime Converter extension, which detects and converts
+ * swim times between SCY, SCM, and LCM formats.
+ *
+ * Author: Clint Hart
+ * Repository: https://github.com/clint2j/swimConverter
+ * License: MIT
+ *
+ * @fileoverview [Brief description of what this file does]
+ */
 const STROKE_ADJUSTMENTS = {
   fr: 0.8,
   bk: 0.6,
