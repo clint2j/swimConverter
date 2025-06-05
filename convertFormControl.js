@@ -2,7 +2,13 @@ import { convert, formatTime } from "./converter.js";
 
 const twoDNums = document.getElementsByClassName("2dNum");
 for (const element of twoDNums) {
-  restrictToTwoDigitNumbers(element);
+  restrictToXDigitNumbers(element,2);
+  addAutoSelectBehavior(element);
+}
+
+const threeDNums = document.getElementsByClassName("3dNum");
+for (const element of threeDNums) {
+  restrictToXDigitNumbers(element,3);
   addAutoSelectBehavior(element);
 }
 
@@ -81,7 +87,7 @@ document.getElementById("but").onclick = () => {
   document.getElementById("output_value").innerHTML = formatTime(convertedTime);
 };
 
-function restrictToTwoDigitNumbers(inputElement) {
+function restrictToXDigitNumbers(inputElement, numDigits) {
   inputElement.addEventListener("keydown", function (e) {
     const allowedKeys = [
       "Backspace",
@@ -107,12 +113,12 @@ function restrictToTwoDigitNumbers(inputElement) {
       return;
     }
 
-    // if (this.selectionStart !== this.selectionEnd) {
-    //   console.log("Test123");
-    //   return;
-    // }
-    // Prevent if already 2 digits
-    if (this.value.length >= 2) {
+    // Calculate selected text length
+    const selectionLength = this.selectionEnd - this.selectionStart;
+    console.log(this.selectionStart);
+    console.log(this)
+    // Prevent if already 2 digits and no text is selected
+    if (this.value.length - selectionLength >= numDigits) {
       e.preventDefault();
     }
   });

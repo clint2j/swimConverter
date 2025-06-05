@@ -1,3 +1,0 @@
-- [ ] Make a cool animation where after submit is pushed and is valid, the time turns from input to clean text display
-- [ ] Or otherwise fix the single digit decimal issues 
-- [ ]
