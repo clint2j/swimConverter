@@ -16,7 +16,7 @@
         margin: 0;
         padding: 10px;
         background: #f4faff;
-        height: 400px;
+        height: 386px;
         width: 250px;
       }
 
@@ -74,6 +74,7 @@
         color: #888;
       }
 
+      input[type="text"],
       input[type="number"] {
         width: 29%;
         display: inline-block;
@@ -115,6 +116,9 @@
       .flexContainer {
         display: flex;
         justify-content: space-between;
+      }
+      .flexContainer span {
+        font-size: 20px;
       }
       #outputBox {
         display: none;
@@ -161,15 +165,17 @@
       <div class="flexContainer">
         <input
           id="mins_inputted"
-          type="number"
+          type="text"
+          inputmode="numeric"
           placeholder="MM"
-          maxlength="2"
-          class="2dNum"
+          maxlength="3"
+          class="3dNum"
         />
         <span>:</span>
         <input
           id="secs_inputted"
-          type="number"
+          type="text"
+          inputmode="numeric"
           placeholder="SS"
           maxlength="2"
           class="2dNum"
@@ -177,7 +183,8 @@
         <span>.</span>
         <input
           id="hh_inputted"
-          type="number"
+          type="text"
+          inputmode="numeric"
           placeholder="HH"
           maxlength="2"
           class="2dNum"
