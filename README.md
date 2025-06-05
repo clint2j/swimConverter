@@ -32,4 +32,4 @@ Here are upcoming features and improvements planned for the SwimTime Converter e
 - [ ] Firefox extension support
 - [ ] User-defined custom conversion rules
 
-✅ **Feel free to open an issue or pull request if you'd like to contribute!**
+**Feel free to open an issue or pull request if you'd like to contribute!**
